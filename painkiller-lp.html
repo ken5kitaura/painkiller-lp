@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>株式会社ペインキラー | 痛みを取り去るソリューション開発</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&family=Zen+Kaku+Gothic+New:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --black: #0a0a0a;
+  --white: #fafafa;
+  --gray-50: #f5f5f5;
+  --gray-100: #e8e8e8;
+  --gray-200: #d4d4d4;
+  --gray-400: #a3a3a3;
+  --gray-500: #737373;
+  --gray-600: #525252;
+  --gray-700: #404040;
+  --gray-800: #262626;
+  --gray-900: #171717;
+  --accent: #dc2626;
+  --accent-dark: #b91c1c;
+  --green-deep: #1B4332;
+  --green-mid: #2D6A4F;
+  --green-light: #40916C;
+  --blue-deep: #1e3a5f;
+  --blue-mid: #2563eb;
+  --orange: #ea580c;
+  --font-display: 'Zen Kaku Gothic New', sans-serif;
+  --font-body: 'Noto Sans JP', sans-serif;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; font-size: 16px; }
+
+body {
+  font-family: var(--font-body);
+  background: var(--black);
+  color: var(--white);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+.container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+.section-label {
+  font-family: var(--font-display);
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+
+.section-title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  font-weight: 900;
+  line-height: 1.2;
+  margin-bottom: 24px;
+}
+
+.section-desc {
+  font-size: 1.05rem;
+  line-height: 1.9;
+  color: var(--gray-400);
+  max-width: 640px;
+}
+
+/* ===== NAV ===== */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+  padding: 20px 0; transition: all 0.4s ease; background: transparent;
+}
+nav.scrolled {
+  background: rgba(10,10,10,0.92); backdrop-filter: blur(20px);
+  padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.nav-inner {
+  max-width: 1200px; margin: 0 auto; padding: 0 24px;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.nav-logo {
+  font-family: var(--font-display); font-weight: 900; font-size: 1.3rem;
+  color: var(--white); text-decoration: none; display: flex; align-items: center; gap: 8px;
+}
+.nav-logo .pill {
+  background: var(--accent); color: white; font-size: 0.55rem;
+  padding: 3px 8px; border-radius: 20px; font-weight: 700; letter-spacing: 0.05em;
+}
+.nav-links { display: flex; gap: 32px; list-style: none; }
+.nav-links a {
+  color: var(--gray-400); text-decoration: none; font-size: 0.85rem;
+  font-weight: 500; transition: color 0.3s; font-family: var(--font-display);
+}
+.nav-links a:hover { color: var(--white); }
+
+/* ===== HERO ===== */
+.hero {
+  min-height: 100vh; display: flex; align-items: center;
+  position: relative; overflow: hidden;
+}
+.hero::before {
+  content: ''; position: absolute; top: -30%; right: -20%;
+  width: 800px; height: 800px;
+  background: radial-gradient(circle, rgba(220,38,38,0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+.hero-content { position: relative; z-index: 1; }
+.hero-eyebrow {
+  font-family: var(--font-display); font-size: 0.8rem; letter-spacing: 0.25em;
+  color: var(--accent); font-weight: 700; margin-bottom: 32px;
+  display: flex; align-items: center; gap: 16px;
+  opacity: 0; animation: fadeUp 0.8s ease forwards 0.2s;
+}
+.hero-eyebrow::before { content: ''; width: 40px; height: 2px; background: var(--accent); }
+.hero-title {
+  font-family: var(--font-display); font-size: clamp(2.8rem, 8vw, 5.5rem);
+  font-weight: 900; line-height: 1.1; margin-bottom: 32px;
+  opacity: 0; animation: fadeUp 0.8s ease forwards 0.4s;
+}
+.hero-title .accent { color: var(--accent); }
+.hero-subtitle {
+  font-size: clamp(1rem, 2.5vw, 1.25rem); color: var(--gray-400);
+  line-height: 1.8; max-width: 580px; margin-bottom: 48px;
+  opacity: 0; animation: fadeUp 0.8s ease forwards 0.6s;
+}
+.hero-keywords {
+  display: flex; gap: 16px; flex-wrap: wrap;
+  opacity: 0; animation: fadeUp 0.8s ease forwards 0.8s;
+}
+.hero-keyword {
+  font-family: var(--font-display); font-size: 0.8rem; font-weight: 700;
+  padding: 8px 20px; border-radius: 100px; letter-spacing: 0.05em;
+  border: 1px solid rgba(255,255,255,0.1); color: var(--gray-400);
+  background: rgba(255,255,255,0.03);
+}
+
+.scroll-indicator {
+  position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%);
+  display: flex; flex-direction: column; align-items: center; gap: 8px;
+  opacity: 0; animation: fadeUp 0.8s ease forwards 1s;
+}
+.scroll-indicator span { font-size: 0.7rem; letter-spacing: 0.15em; color: var(--gray-600); }
+.scroll-line {
+  width: 1px; height: 40px;
+  background: linear-gradient(to bottom, var(--gray-600), transparent);
+  animation: scrollPulse 2s ease-in-out infinite;
+}
+
+/* ===== WHAT WE DO ===== */
+.whatwedo { padding: 140px 0; }
+.whatwedo-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 80px; align-items: center;
+}
+.method-diagram { display: flex; flex-direction: column; gap: 0; width: 100%; }
+.method-step { display: flex; align-items: stretch; gap: 24px; padding: 28px 0; }
+.method-line { display: flex; flex-direction: column; align-items: center; width: 40px; flex-shrink: 0; }
+.method-dot {
+  width: 14px; height: 14px; border-radius: 50%; border: 2px solid var(--accent);
+  background: var(--black); flex-shrink: 0; position: relative; z-index: 1;
+}
+.method-dot.active { background: var(--accent); }
+.method-connector { width: 2px; flex: 1; background: rgba(220,38,38,0.2); }
+.method-step:last-child .method-connector { display: none; }
+.method-content h4 {
+  font-family: var(--font-display); font-size: 1.1rem; font-weight: 700;
+  margin-bottom: 6px; color: var(--white);
+}
+.method-content p { font-size: 0.9rem; color: var(--gray-500); line-height: 1.6; }
+
+/* ===== STORY ===== */
+.story { padding: 140px 0; background: var(--gray-900); position: relative; overflow: hidden; }
+.story::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+  background: radial-gradient(ellipse at 70% 30%, rgba(220,38,38,0.04) 0%, transparent 60%);
+  pointer-events: none;
+}
+.story-header { text-align: center; margin-bottom: 80px; position: relative; z-index: 1; }
+.story-header .section-desc { margin: 0 auto; text-align: center; }
+
+.timeline { position: relative; z-index: 1; max-width: 900px; margin: 0 auto; }
+.timeline::before {
+  content: ''; position: absolute; left: 50%; top: 0; bottom: 0;
+  width: 2px; background: linear-gradient(to bottom, var(--accent), rgba(220,38,38,0.1));
+  transform: translateX(-50%);
+}
+.tl-item {
+  display: flex; align-items: flex-start; margin-bottom: 60px; position: relative;
+}
+.tl-item:last-child { margin-bottom: 0; }
+.tl-item:nth-child(odd) { flex-direction: row; }
+.tl-item:nth-child(even) { flex-direction: row-reverse; }
+.tl-content {
+  width: calc(50% - 40px); padding: 32px;
+  background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 12px; transition: all 0.3s ease;
+}
+.tl-content:hover { border-color: rgba(255,255,255,0.12); background: rgba(255,255,255,0.05); }
+.tl-dot {
+  position: absolute; left: 50%; top: 36px;
+  width: 16px; height: 16px; border-radius: 50%;
+  background: var(--accent); border: 3px solid var(--black);
+  transform: translateX(-50%); z-index: 2;
+}
+.tl-phase {
+  font-family: var(--font-display); font-size: 0.7rem; font-weight: 700;
+  letter-spacing: 0.15em; color: var(--accent); margin-bottom: 8px;
+}
+.tl-title {
+  font-family: var(--font-display); font-size: 1.2rem; font-weight: 900;
+  margin-bottom: 8px; line-height: 1.4;
+}
+.tl-desc { font-size: 0.9rem; color: var(--gray-400); line-height: 1.8; }
+.tl-tag {
+  display: inline-block; margin-top: 12px; font-size: 0.75rem;
+  padding: 4px 12px; border-radius: 6px; font-weight: 600;
+}
+.tl-tag.product { background: rgba(6,182,212,0.15); color: #22d3ee; }
+.tl-tag.service { background: rgba(27,67,50,0.3); color: var(--green-light); }
+.tl-tag.system { background: rgba(234,88,12,0.15); color: #fb923c; }
+
+/* ===== SOLUTIONS ===== */
+.solutions { padding: 140px 0; }
+.solutions-header { margin-bottom: 80px; }
+.solutions-header .section-desc { max-width: 700px; }
+.sol-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+.sol-card {
+  background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 16px; padding: 48px 40px; transition: all 0.4s ease;
+  position: relative; overflow: hidden;
+}
+.sol-card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0;
+  height: 3px; opacity: 0; transition: opacity 0.4s ease;
+}
+.sol-card:hover { border-color: rgba(255,255,255,0.12); transform: translateY(-4px); }
+.sol-card:hover::before { opacity: 1; }
+.sol-card.marunage::before { background: linear-gradient(90deg, var(--green-deep), var(--green-light)); }
+.sol-card.consulting::before { background: linear-gradient(90deg, var(--orange), #f59e0b); }
+.sol-card.soda::before { background: linear-gradient(90deg, #06b6d4, #22d3ee); }
+.sol-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em;
+  padding: 6px 14px; border-radius: 20px; margin-bottom: 24px;
+}
+.sol-card.marunage .sol-badge { background: rgba(27,67,50,0.4); color: var(--green-light); }
+.sol-card.consulting .sol-badge { background: rgba(234,88,12,0.2); color: #fb923c; }
+.sol-card.soda .sol-badge { background: rgba(6,182,212,0.2); color: #22d3ee; }
+.sol-title { font-family: var(--font-display); font-size: 1.6rem; font-weight: 900; margin-bottom: 8px; }
+.sol-subtitle { font-size: 0.85rem; color: var(--gray-500); margin-bottom: 20px; }
+.sol-desc { font-size: 0.95rem; color: var(--gray-400); line-height: 1.8; margin-bottom: 28px; }
+.sol-features { list-style: none; display: flex; flex-wrap: wrap; gap: 8px; }
+.sol-features li {
+  font-size: 0.75rem; padding: 5px 12px; border-radius: 6px;
+  background: rgba(255,255,255,0.04); color: var(--gray-400);
+  border: 1px solid rgba(255,255,255,0.06);
+}
+.sol-card.full-width { grid-column: 1 / -1; }
+
+/* ===== ENGINE ===== */
+.engine { padding: 140px 0; background: var(--gray-900); position: relative; }
+.engine::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+  background: radial-gradient(ellipse at 30% 50%, rgba(27,67,50,0.1) 0%, transparent 60%);
+  pointer-events: none;
+}
+.engine-header { margin-bottom: 80px; position: relative; z-index: 1; }
+.engine-headline {
+  font-family: var(--font-display); font-size: clamp(1.8rem, 4vw, 2.8rem);
+  font-weight: 900; line-height: 1.3; margin-bottom: 16px;
+}
+.engine-headline .green { color: var(--green-light); }
+.engine-impact {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 24px; margin-bottom: 80px; position: relative; z-index: 1;
+}
+.impact-card {
+  background: rgba(27,67,50,0.1); border: 1px solid rgba(64,145,108,0.2);
+  border-radius: 12px; padding: 32px; text-align: center;
+}
+.impact-number { font-family: var(--font-display); font-size: 2.8rem; font-weight: 900; color: var(--green-light); margin-bottom: 8px; }
+.impact-unit { font-size: 1.2rem; color: var(--green-light); }
+.impact-label { font-size: 0.85rem; color: var(--gray-400); margin-top: 8px; }
+.services-grid {
+  display: grid; grid-template-columns: repeat(5, 1fr);
+  gap: 16px; margin-bottom: 60px; position: relative; z-index: 1;
+}
+.service-card {
+  background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 12px; padding: 28px 20px; text-align: center; transition: all 0.3s ease;
+}
+.service-card:hover { background: rgba(27,67,50,0.15); border-color: rgba(64,145,108,0.3); transform: translateY(-4px); }
+.service-icon { font-size: 2rem; margin-bottom: 16px; }
+.service-name { font-family: var(--font-display); font-size: 0.85rem; font-weight: 700; margin-bottom: 8px; color: var(--white); }
+.service-detail { font-size: 0.75rem; color: var(--gray-500); line-height: 1.6; }
+.engine-subsidy {
+  background: rgba(27,67,50,0.15); border: 1px solid rgba(64,145,108,0.25);
+  border-radius: 16px; padding: 48px; display: grid; grid-template-columns: 1fr 1fr;
+  gap: 48px; align-items: center; position: relative; z-index: 1;
+}
+.subsidy-text h3 { font-family: var(--font-display); font-size: 1.5rem; font-weight: 900; margin-bottom: 16px; color: var(--green-light); }
+.subsidy-text p { color: var(--gray-400); line-height: 1.8; font-size: 0.95rem; }
+.subsidy-calc { display: flex; flex-direction: column; gap: 16px; }
+.calc-row { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.06); }
+.calc-row:last-child { border-bottom: none; }
+.calc-label { font-size: 0.9rem; color: var(--gray-400); }
+.calc-value { font-family: var(--font-display); font-size: 1.1rem; font-weight: 700; }
+.calc-row.highlight .calc-label { color: var(--green-light); font-weight: 700; }
+.calc-row.highlight .calc-value { color: var(--green-light); font-size: 1.4rem; }
+
+/* ===== FOOTER ===== */
+footer { padding: 80px 0 40px; border-top: 1px solid rgba(255,255,255,0.06); }
+.footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 60px; margin-bottom: 60px; }
+.footer-brand { font-family: var(--font-display); font-size: 1.5rem; font-weight: 900; margin-bottom: 16px; }
+.footer-tagline { color: var(--gray-500); font-size: 0.9rem; line-height: 1.7; max-width: 320px; }
+.footer-heading { font-family: var(--font-display); font-size: 0.75rem; font-weight: 700; letter-spacing: 0.15em; color: var(--gray-500); margin-bottom: 20px; }
+.footer-links { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+.footer-links a { color: var(--gray-400); text-decoration: none; font-size: 0.9rem; transition: color 0.3s; }
+.footer-links a:hover { color: var(--white); }
+.footer-bottom { padding-top: 32px; border-top: 1px solid rgba(255,255,255,0.06); display: flex; justify-content: space-between; align-items: center; }
+.footer-copy { font-size: 0.8rem; color: var(--gray-600); }
+
+/* ===== ANIMATIONS ===== */
+@keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes scrollPulse { 0%, 100% { opacity: 0.3; } 50% { opacity: 0.8; } }
+.reveal { opacity: 0; transform: translateY(40px); transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 900px) {
+  .whatwedo-grid { grid-template-columns: 1fr; gap: 40px; }
+  .sol-grid { grid-template-columns: 1fr; }
+  .sol-card.full-width { grid-column: auto; }
+  .engine-impact { grid-template-columns: 1fr; }
+  .services-grid { grid-template-columns: repeat(2, 1fr); }
+  .engine-subsidy { grid-template-columns: 1fr; }
+  .footer-grid { grid-template-columns: 1fr; gap: 40px; }
+  .nav-links { display: none; }
+  .timeline::before { left: 20px; }
+  .tl-item, .tl-item:nth-child(even) { flex-direction: row; }
+  .tl-content { width: calc(100% - 60px); margin-left: auto; }
+  .tl-dot { left: 20px; }
+}
+@media (max-width: 600px) {
+  .services-grid { grid-template-columns: 1fr; }
+  .engine-subsidy { padding: 28px; }
+  .sol-card { padding: 32px 24px; }
+  .hero-keywords { gap: 8px; }
+  .hero-keyword { font-size: 0.7rem; padding: 6px 14px; }
+}
+</style>
+</head>
+<body>
+
+<!-- Navigation -->
+<nav id="nav">
+  <div class="nav-inner">
+    <a href="#" class="nav-logo">PAINKILLER <span class="pill">株式会社ペインキラー</span></a>
+    <ul class="nav-links">
+      <li><a href="#approach">アプローチ</a></li>
+      <li><a href="#story">ストーリー</a></li>
+      <li><a href="#solutions">ソリューション</a></li>
+      <li><a href="#engine">まるなげエンジン</a></li>
+      <li><a href="#contact">お問い合わせ</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="container hero-content">
+    <div class="hero-eyebrow">PAINKILLER Inc.</div>
+    <h1 class="hero-title">
+      現場の<span class="accent">痛み</span>を<br>取り去る。
+    </h1>
+    <p class="hero-subtitle">
+      誰もが感じているのに、放置されてきた業務の非効率やコストの無駄。<br>
+      私たちはその「ペイン」を見つけ出し、テクノロジーで根本から取り除くソリューション開発会社です。
+    </p>
+    <div class="hero-keywords">
+      <span class="hero-keyword">ハードウェア開発</span>
+      <span class="hero-keyword">AI業務自動化</span>
+      <span class="hero-keyword">経営管理DX</span>
+      <span class="hero-keyword">コスト構造改革</span>
+    </div>
+  </div>
+  <div class="scroll-indicator">
+    <span>SCROLL</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- What We Do -->
+<section class="whatwedo" id="approach">
+  <div class="container">
+    <div class="whatwedo-grid">
+      <div class="reveal">
+        <div class="section-label">What We Do</div>
+        <h2 class="section-title">痛みを見つけ、<br>仕組みで消す。</h2>
+        <p class="section-desc">
+          ペインキラーは、業界や業務の「痛み」に対して最適なソリューションを開発し、提供する会社です。ハードウェアの設計からAIシステムの開発、経営管理の自動化まで。痛みの種類に応じて、最も効果的な手段を選びます。
+        </p>
+        <p class="section-desc" style="margin-top: 16px;">
+          「あったらいいな」のビタミン剤ではなく、「これがないと困る」ペインキラーだけを作ります。
+        </p>
+      </div>
+      <div class="method-diagram reveal">
+        <div class="method-step">
+          <div class="method-line"><div class="method-dot active"></div><div class="method-connector"></div></div>
+          <div class="method-content">
+            <h4>01 — 痛みの発見</h4>
+            <p>現場に入り込み、誰もが「仕方ない」と諦めていた非効率やコストの無駄を特定する</p>
+          </div>
+        </div>
+        <div class="method-step">
+          <div class="method-line"><div class="method-dot active"></div><div class="method-connector"></div></div>
+          <div class="method-content">
+            <h4>02 — ソリューション設計</h4>
+            <p>ハードウェア・ソフトウェア・AIを問わず、痛みを最も効果的に取り除く手段を設計する</p>
+          </div>
+        </div>
+        <div class="method-step">
+          <div class="method-line"><div class="method-dot active"></div><div class="method-connector"></div></div>
+          <div class="method-content">
+            <h4>03 — 実装と検証</h4>
+            <p>現場で使えるプロダクトに落とし込み、実際のオペレーションで効果を検証する</p>
+          </div>
+        </div>
+        <div class="method-step">
+          <div class="method-line"><div class="method-dot"></div></div>
+          <div class="method-content">
+            <h4>04 — 横展開</h4>
+            <p>検証済みのソリューションを、同じ痛みを抱える他の現場へ展開する</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Story -->
+<section class="story" id="story">
+  <div class="container">
+    <div class="story-header reveal">
+      <div class="section-label">Our Story</div>
+      <h2 class="section-title">原点は、飲食店の厨房だった。</h2>
+      <p class="section-desc">
+        一つの現場の痛みから始まった取り組みが、やがてAI経理システムの開発へ、そして企業全体の経営管理自動化へと発展していきました。
+      </p>
+    </div>
+
+    <div class="timeline">
+      <div class="tl-item reveal">
+        <div class="tl-content">
+          <div class="tl-phase">PHASE 01 — 原点</div>
+          <h3 class="tl-title">飲食店のコスト構造に挑む</h3>
+          <p class="tl-desc">
+            飲食店が炭酸水に払っているコストは、本来の数十倍。ペットボトルの購入・在庫管理・廃棄の手間も膨大。この痛みを解決するために、ミドボン直結型レギュレーターを独自開発。業務用炭酸水サーバー「SODA FACTORY」として製品化しました。
+          </p>
+          <span class="tl-tag product">ハードウェア開発</span>
+        </div>
+        <div class="tl-dot"></div>
+      </div>
+
+      <div class="tl-item reveal">
+        <div class="tl-content">
+          <div class="tl-phase">PHASE 02 — 発見</div>
+          <h3 class="tl-title">小規模飲食店の経理の痛み</h3>
+          <p class="tl-desc">
+            SODA FACTORYの導入先である飲食店オーナーたちとの対話の中で、経理業務の深刻な痛みに気づきました。レシートの山、手作業の記帳、溜まる領収書。記帳の自動化に着手し、「まるなげ経理」の原型が誕生します。
+          </p>
+          <span class="tl-tag service">AI記帳自動化</span>
+        </div>
+        <div class="tl-dot"></div>
+      </div>
+
+      <div class="tl-item reveal">
+        <div class="tl-content">
+          <div class="tl-phase">PHASE 03 — 進化</div>
+          <h3 class="tl-title">税理士法人監修でシステムを本格化</h3>
+          <p class="tl-desc">
+            顧問税理士である絆パートナーズ税理士法人の監修のもと、AIによる自動仕訳・ダブルAI検証・消込処理を開発。「正確性」と「実務適合性」を兼ね備えたシステムへと進化させました。
+          </p>
+          <span class="tl-tag system">AI × 税務</span>
+        </div>
+        <div class="tl-dot"></div>
+      </div>
+
+      <div class="tl-item reveal">
+        <div class="tl-content">
+          <div class="tl-phase">PHASE 04 — 実証</div>
+          <h3 class="tl-title">ラジオ大阪で経営管理まで自動化</h3>
+          <p class="tl-desc">
+            ラジオ大阪の経営再建プロジェクトにおいて、経理業務の自動化だけでなく、経営管理業務全体の自動化を実装。記帳から月次レポート、資金管理まで、一気通貫のシステムとして「まるなげエンジン」を完成させました。
+          </p>
+          <span class="tl-tag system">経営管理DX</span>
+        </div>
+        <div class="tl-dot"></div>
+      </div>
+
+      <div class="tl-item reveal">
+        <div class="tl-content">
+          <div class="tl-phase">PHASE 05 — 展開</div>
+          <h3 class="tl-title">すべての中小企業へ</h3>
+          <p class="tl-desc">
+            実証済みのシステムをIT導入補助金対応のクラウドサービスとして製品化。国の補助金を活用することで、中小企業が月額5〜7万円の実質負担で経理部門をまるごと自動化できる体制を整えています。
+          </p>
+          <span class="tl-tag service">SaaS × 補助金</span>
+        </div>
+        <div class="tl-dot"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Solutions -->
+<section class="solutions" id="solutions">
+  <div class="container">
+    <div class="solutions-header reveal">
+      <div class="section-label">Solutions</div>
+      <h2 class="section-title">3つのソリューション</h2>
+      <p class="section-desc">
+        ハードウェアからAIシステム、経営コンサルティングまで。痛みの種類に応じた最適な解決策を提供します。
+      </p>
+    </div>
+
+    <div class="sol-grid">
+      <div class="sol-card marunage full-width reveal">
+        <div class="sol-badge">FLAGSHIP SOLUTION</div>
+        <h3 class="sol-title">まるなげ経理</h3>
+        <p class="sol-subtitle">AI経理業務自動化ソリューション</p>
+        <p class="sol-desc">
+          AIが記帳・消込・証憑管理・月次レポートを自動処理。経理部員2名分の業務を自動化し、月40〜50万円の人件費を圧縮します。中核製品「まるなげエンジン」と、エントリー向けの「まるなげ記帳」の2層構成。IT導入補助金対応で、実質月額5〜7万円から導入可能です。
+        </p>
+        <ul class="sol-features">
+          <li>まるなげエンジン</li>
+          <li>まるなげ記帳</li>
+          <li>AI自動仕訳</li>
+          <li>ダブルAI検証</li>
+          <li>消込自動化</li>
+          <li>月次レポート</li>
+          <li>IT導入補助金対応</li>
+          <li>税理士法人監修</li>
+        </ul>
+      </div>
+
+      <div class="sol-card soda reveal">
+        <div class="sol-badge">HARDWARE</div>
+        <h3 class="sol-title">SODA FACTORY</h3>
+        <p class="sol-subtitle">業務用炭酸水サーバー｜月額5,500円</p>
+        <p class="sol-desc">
+          ミドボン直結の業務用炭酸水サーバー。業界最高レベルのガス圧5.5GVで、ペットボトル原価を最大95%削減。ゴミ・在庫管理・買い出しの手間をゼロにします。
+        </p>
+        <ul class="sol-features">
+          <li>ミドボン直結</li>
+          <li>原価95%削減</li>
+          <li>ガス圧5.5GV</li>
+          <li>月額定額制</li>
+          <li>初月無料</li>
+        </ul>
+      </div>
+
+      <div class="sol-card consulting reveal">
+        <div class="sol-badge">CONSULTING</div>
+        <h3 class="sol-title">経営再建・業務自動化</h3>
+        <p class="sol-subtitle">企業のDX推進と財務再構築</p>
+        <p class="sol-desc">
+          経営危機に陥った企業の財務再構築から、AIを活用した業務自動化の導入支援まで。自社プロダクトで培った実装力を武器に、他社の経営課題を解決します。
+        </p>
+        <ul class="sol-features">
+          <li>財務再構築</li>
+          <li>業務自動化</li>
+          <li>AI導入支援</li>
+          <li>コスト最適化</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Marunage Engine Detail -->
+<section class="engine" id="engine">
+  <div class="container">
+    <div class="engine-header reveal">
+      <div class="section-label">Flagship Product</div>
+      <h2 class="engine-headline">
+        <span class="green">まるなげエンジン</span>で、<br>経理部を丸ごと自動化する。
+      </h2>
+      <p class="section-desc">
+        レシートを送るだけ。AIが読み取り、仕訳し、消込し、レポートを作る。人間がやるのは、最終確認のボタンを押すことだけです。
+      </p>
+    </div>
+
+    <div class="engine-impact reveal">
+      <div class="impact-card">
+        <div class="impact-number">2<span class="impact-unit">名分</span></div>
+        <div class="impact-label">経理部員の業務を自動化</div>
+      </div>
+      <div class="impact-card">
+        <div class="impact-number">40-50<span class="impact-unit">万円</span></div>
+        <div class="impact-label">月額コスト削減効果</div>
+      </div>
+      <div class="impact-card">
+        <div class="impact-number">最大<span class="impact-unit"> 2/3</span></div>
+        <div class="impact-label">補助金で費用をカバー</div>
+      </div>
+    </div>
+
+    <div class="services-grid reveal">
+      <div class="service-card">
+        <div class="service-icon">📝</div>
+        <div class="service-name">記帳まるなげ</div>
+        <div class="service-detail">AI-OCR読取<br>自動仕訳<br>ダブルAI検証</div>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">🔄</div>
+        <div class="service-name">照合・消込<br>まるなげ</div>
+        <div class="service-detail">クレカ照合<br>入金・支払消込<br>不一致アラート</div>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">🗄️</div>
+        <div class="service-name">証憑まるなげ</div>
+        <div class="service-detail">自動保管<br>仕訳紐付け<br>電帳法対応</div>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">📊</div>
+        <div class="service-name">月次レポート<br>まるなげ</div>
+        <div class="service-detail">P/L・B/S自動生成<br>推移分析<br>ダッシュボード</div>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">🧾</div>
+        <div class="service-name">経費まるなげ</div>
+        <div class="service-detail">LINE経費申請<br>自動分類<br>承認ワークフロー</div>
+      </div>
+    </div>
+
+    <div class="engine-subsidy reveal">
+      <div class="subsidy-text">
+        <h3>デジタル化・AI導入補助金 対応</h3>
+        <p>
+          まるなげエンジンは、2026年度のデジタル化・AI導入補助金（旧IT導入補助金）の対象ツールとして登録予定。導入費用の1/2〜2/3が国から補助され、中小企業の負担を大幅に軽減します。
+        </p>
+      </div>
+      <div class="subsidy-calc">
+        <div class="calc-row">
+          <span class="calc-label">システム総額（2年間）</span>
+          <span class="calc-value">328万円</span>
+        </div>
+        <div class="calc-row">
+          <span class="calc-label">補助金（最大2/3の場合）</span>
+          <span class="calc-value" style="color: var(--green-light);">▲ 約219万円</span>
+        </div>
+        <div class="calc-row highlight">
+          <span class="calc-label">実質月額負担</span>
+          <span class="calc-value">約4.5万円〜</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer id="contact">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand">PAINKILLER Inc.</div>
+        <p class="footer-tagline">
+          現場の痛みを、テクノロジーで取り去る。<br>
+          ハードウェアからAIまで、<br>
+          最適なソリューションを開発します。
+        </p>
+      </div>
+      <div>
+        <div class="footer-heading">ソリューション</div>
+        <ul class="footer-links">
+          <li><a href="https://marunagekeiri.com" target="_blank">まるなげ経理</a></li>
+          <li><a href="https://sodafactory.co" target="_blank">SODA FACTORY</a></li>
+          <li><a href="#">経営再建コンサルティング</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-heading">お問い合わせ</div>
+        <ul class="footer-links">
+          <li><a href="mailto:info@painkiller.co.jp">info@painkiller.co.jp</a></li>
+          <li><a href="#">会社概要</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-copy">&copy; 2026 PAINKILLER Inc. All rights reserved.</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => { nav.classList.toggle('scrolled', window.scrollY > 50); });
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+}, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
